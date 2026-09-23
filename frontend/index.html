@@ -6,9 +6,13 @@
   <style>
     body { font-family: sans-serif; margin: 0; background: #1c1917; color: #f5f5f4; }
     header { display: flex; gap: 12px; align-items: center; padding: 12px 20px; background: #44403c; }
-    main { max-width: 760px; margin: 20px auto; padding: 0 12px; }
-    input, button { padding: 8px; margin-right: 8px; }
+    main { max-width: 900px; margin: 20px auto; padding: 0 12px; }
+    input, button { padding: 6px 8px; margin-right: 4px; }
     .alarm { color: #fca5a5; } .ok { color: #86efac; }
+    .locked { color: #fbbf24; font-weight: bold; }
+    .pending { color: #38bdf8; font-weight: bold; }
+    .row-locked { background: #292524; opacity: 0.85; }
+    .row-locked td { border-bottom-color: #78716c; }
     #live { min-height: 1.4em; }
     table { width: 100%; border-collapse: collapse; }
     td, th { border-bottom: 1px solid #57534e; padding: 6px; text-align: left; }
@@ -22,11 +26,11 @@
   </header>
   <main>
     <section id="login">
-      <p>检查员上报测点甲烷，达到 1% 会立刻推到已打开的页面。这不是图表看板。</p>
+      <p>检查员上报测点甲烷，达到 1% 会立刻推到已打开的页面。正常行可由检查员申请、旁观账号输口令双人确认后锁死；锁死后禁止改正浓度。</p>
       <input id="user" value="gasman" />
       <input id="pass" type="password" value="gas123456" />
       <button id="go">登录</button>
-      <p>gasman / gas123456 可上报；viewer / view123456 只能看</p>
+      <p>gasman / gas123456 检查员：可上报、可申请锁定；viewer / view123456 旁观账号：只能看、只能确认锁定</p>
     </section>
     <section id="app" hidden>
       <p id="live">等待推送</p>
@@ -35,7 +39,10 @@
         <input id="ch4" type="number" step="0.01" placeholder="甲烷 %" />
         <button>上报</button>
       </form>
-      <table><thead><tr><th>测点</th><th>甲烷 %</th><th>状态</th><th>说明</th></tr></thead><tbody id="rows"></tbody></table>
+      <table>
+        <thead><tr><th>测点</th><th>甲烷 %</th><th>状态</th><th>说明</th><th>锁定</th><th>改正</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
     </section>
   </main>
   <script src="/app.js"></script>
